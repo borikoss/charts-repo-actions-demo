@@ -354,6 +354,21 @@ entries:
   example-v1:
   - apiVersion: v1
     appVersion: "3.9"
+    created: "2022-04-29T10:14:10.416410545Z"
+    description: Deploy a basic Alpine Linux pod
+    digest: 86549af2b68642a82dd33ecb5d45a4ed3d3524d6055123a8f54c37f27ca4831c
+    home: https://helm.sh/helm
+    maintainers:
+    - email: email@example.com
+      name: Name
+    name: example-v1
+    sources:
+    - https://github.com/helm/helm
+    urls:
+    - https://github.com/borikoss/charts-repo-actions-demo/releases/download/example-v1-0.1.17/example-v1-0.1.17.tgz
+    version: 0.1.17
+  - apiVersion: v1
+    appVersion: "3.9"
     created: "2022-04-28T07:54:03.201838285Z"
     description: Deploy a basic Alpine Linux pod
     digest: f17d55438aa703bccfc7e7078229ebf31b059924c7a27c19e7edb56ede09bd82
@@ -623,4 +638,4 @@ entries:
     urls:
     - https://github.com/helm/charts-repo-actions-demo/releases/download/example-v2-0.2.2/example-v2-0.2.2.tgz
     version: 0.2.2
-generated: "2022-04-28T07:54:03.201940586Z"
+generated: "2022-04-29T10:14:10.416618642Z"
