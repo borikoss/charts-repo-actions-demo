@@ -24,6 +24,6 @@ spec:
   containers:
   - name: waiter
     image: "alpine:{{ .Chart.AppVersion }}"
-    command: ["/bin/sleep","10000"]
+    command: ["/bin/sleep","60000"]
     securityContext:
       privileged: true

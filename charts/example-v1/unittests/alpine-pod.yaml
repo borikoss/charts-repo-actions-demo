@@ -16,12 +16,12 @@ tests:
           path: metadata.name
           value: my-release-my-alpine
       - matchRegex:
-          path: metadata.labels.helm\.sh/chart
+          path: metadata.labels["helm.sh/chart"]
           pattern: ^example-v1-
       - isNull:
           path: metadata.annotations
       - equal:
-          path: metadata.labels.app\.kubernetes\.io\/instance
+          path: metadata.labels["app.kubernetes.io/instance"]
           value: my-release
 
   - it: controller restart Always policy
