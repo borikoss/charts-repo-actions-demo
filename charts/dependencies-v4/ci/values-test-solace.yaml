@@ -1,0 +1,3 @@
+test:
+  solace:
+    enabled: true
