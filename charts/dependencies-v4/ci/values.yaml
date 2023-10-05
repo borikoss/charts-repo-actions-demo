@@ -1,6 +1,0 @@
-test:
-  solace:
-    enabled: true
-
-# image:
-#   tag: 3
