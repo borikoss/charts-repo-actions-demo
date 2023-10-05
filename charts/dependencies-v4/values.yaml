@@ -1,0 +1,5 @@
+restartPolicy: Always
+
+test:
+  solace:
+    enabled: true

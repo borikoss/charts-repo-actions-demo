@@ -1,0 +1,20 @@
+apiVersion: v2
+appVersion: "2.0"
+
+description: Chart to test dependencies
+home: https://github.com/helm/charts-repo-actions-demo
+
+maintainers:
+  - email: email@example.com
+    name: Name
+name: dependencies-v4
+
+sources:
+  - https://github.com/helm/charts-repo-actions-demo
+version: 3.4.5
+
+dependencies:
+  - name: pubsubplus
+    version: 3.3.2
+    repository: https://solaceproducts.github.io/pubsubplus-kubernetes-helm-quickstart/helm-charts
+    condition: test.solace.enabled
