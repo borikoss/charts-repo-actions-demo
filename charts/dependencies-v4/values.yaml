@@ -1,5 +1,8 @@
 restartPolicy: Always
 
-test:
-  solace:
-    enabled: false
+# test:
+#   solace:
+#     enabled: false
+
+image:
+  tag: 3
