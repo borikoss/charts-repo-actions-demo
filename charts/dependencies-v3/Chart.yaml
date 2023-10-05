@@ -1,0 +1,20 @@
+apiVersion: v2
+appVersion: "1.0"
+
+description: Chart to test dependencies
+home: https://github.com/helm/charts-repo-actions-demo
+
+maintainers:
+  - email: email@example.com
+    name: Name
+name: dependencies-v3
+
+sources:
+  - https://github.com/helm/charts-repo-actions-demo
+version: 1.2.3
+
+dependencies:
+  - name: redis
+    version: 18.1.2
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.enabled

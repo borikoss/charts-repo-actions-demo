@@ -25,6 +25,14 @@ Example project to demo testing and hosting a chart repository with GitHub Pages
 
 You can automatically test and host your own chart repository with GitHub Pages and Actions by following these steps.
 
+Run helm tests using ct-tool locally:
+
+```
+docker run -it --workdir=/data --volume $(pwd):/data quay.io/helmpack/chart-testing:v3.5.0 bash -c "helm plugin install https://github.com/quintush/helm-unittest --version 0.3.1 ; ct lint --config ct.yaml --charts charts/example-v1"
+```
+
+
+
 ### Steps
 
 The prerequisites listed in the READMEs for [actions](#actions) above _must_ be complete before the steps below, or your charts' initial versions won't be released.
