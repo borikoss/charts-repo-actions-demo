@@ -326,6 +326,27 @@ entries:
     urls:
     - https://github.com/helm/charts-repo-actions-demo/releases/download/dependencies-v2-0.1.2/dependencies-v2-0.1.2.tgz
     version: 0.1.2
+  dependencies-v3:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2023-10-05T07:18:06.164193045Z"
+    dependencies:
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 18.1.2
+    description: Chart to test dependencies
+    digest: 2a5b80964ca9e0fed63fa8ac099cc1dbb9a8c33efcec3f83d950727de8e98167
+    home: https://github.com/helm/charts-repo-actions-demo
+    maintainers:
+    - email: email@example.com
+      name: Name
+    name: dependencies-v3
+    sources:
+    - https://github.com/helm/charts-repo-actions-demo
+    urls:
+    - https://github.com/borikoss/charts-repo-actions-demo/releases/download/dependencies-v3-1.2.3/dependencies-v3-1.2.3.tgz
+    version: 1.2.3
   example:
   - apiVersion: v1
     appVersion: "1.0"
@@ -668,4 +689,4 @@ entries:
     urls:
     - https://github.com/helm/charts-repo-actions-demo/releases/download/example-v2-0.2.2/example-v2-0.2.2.tgz
     version: 0.2.2
-generated: "2023-10-04T14:57:06.726275243Z"
+generated: "2023-10-05T07:18:06.164283245Z"
