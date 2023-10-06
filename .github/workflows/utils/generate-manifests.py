@@ -32,17 +32,21 @@ def parse_yaml_files(directory):
 
 if __name__ == "__main__":
     # Check if a directory path argument is provided
-    if len(sys.argv) != 3:
-        print("Usage: python script.py <deployment_targets_path> <helm_chart_path>")
+    if len(sys.argv) != 4:
+        print("Usage: python script.py <deployment_targets_path> <helm_chart_path> <gen_manifests_path>")
         sys.exit(1)
 
     # Input: Get the directory path from the command-line argument
     deployment_targets_path = sys.argv[1]
     print(f"DeploymentTarget path: '{deployment_targets_path}'")
 
-    # Input: Get the directory path from the command-line argument
+    # Input: Get the Helm chart path from the command-line argument
     helm_chart_path = sys.argv[2]
     print(f"Helm chart path: '{helm_chart_path}'")
+
+    # Input: Get the generated Helm manifests path from the command-line argument
+    gen_manifests_path = sys.argv[3]
+    print(f"Generated Helm manifests path: '{gen_manifests_path}'")
 
     # Call the function to parse YAML files in the directory
     parsed_yaml_data = parse_yaml_files(deployment_targets_path)
