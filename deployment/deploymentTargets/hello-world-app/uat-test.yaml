@@ -1,0 +1,13 @@
+name: uat-test
+workload: hello-world-app
+environment: qa
+appValueFiles: 
+- deployment/hello-world-app/values-qa-uat.yaml
+infraValueScopes:
+  environment: dev
+  dataCenterGeoLocation: gdc
+  clusterName: si0dcs09
+manifests:
+  repo: kalypso-app-gitops.git
+  branch: main
+  path: uat-test

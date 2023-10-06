@@ -1,0 +1,25 @@
+# Name of the Deployment target
+name: functional-test
+
+# Workload app
+workload: hello-world-app
+
+# environment 
+environment: dev
+
+# Helm application value files
+appValueFiles: 
+- deployment/hello-world-app/values-dev-ptest.yaml
+
+# Helm infrastructure value scopes
+infraValueScopes:
+  # environment scope
+  environment: dev
+  # data center Geo location scope
+  dataCenterGeoLocation: ldc
+
+# GitOps repository
+manifests:
+  repo: kalypso-app-gitops.git
+  branch: main
+  path: ./functional-test

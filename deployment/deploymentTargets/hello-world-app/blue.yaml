@@ -1,0 +1,11 @@
+name: blue
+workload: hello-world-app
+environment: prod
+appValueFiles: 
+- deployment/hello-world-app/values-prod-blue.yaml
+infraValueScopes:
+  environment: prod
+manifests:
+  repo: kalypso-app-gitops.git
+  branch: main
+  path: blue
