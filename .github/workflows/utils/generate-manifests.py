@@ -3,6 +3,7 @@
 import os
 import sys
 import yaml
+import subprocess
 
 def parse_yaml_files(directory):
     # Check if the directory exists
@@ -40,6 +41,28 @@ def create_folder(folder_name):
     except Exception as e:
         print(f"An error occurred: {str(e)}")
 
+def run_helm_template_cmd(chart_path, release_name, values_file, output_manifest):
+    try:
+        # Construct the Helm command
+        helm_command = [
+            "helm",
+            "template",
+            release_name,
+            chart_path,
+            "--values",
+            values_file
+        ]
+
+        # Run the Helm command and send output to the file
+        with open(output_manifest,'w') as f_obj:
+            subprocess.run(helm_command,stdout=f_obj,text=True,check=True)
+
+        print(f"Helm template command executed successfully.")
+    except subprocess.CalledProcessError as e:
+        print(f"Error running Helm template command: {e}")
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+
 if __name__ == "__main__":
     # Check if a directory path argument is provided
     if len(sys.argv) != 4:
@@ -67,3 +90,11 @@ if __name__ == "__main__":
     # You can now work with the parsed YAML data as a list of dictionaries
     for data in parsed_yaml_data:
         print(data)
+    
+    # Run helm template command to a file output
+    run_helm_template_cmd(
+        helm_chart_path, 
+        "my-release", 
+        "deploymentTargets/hello-world-app/helm-values/values-dev.yaml",
+        "/home/runner/work/charts-repo-actions-demo/charts-repo-actions-demo/generated_manifests/test.yaml"
+    )
