@@ -1,5 +1,5 @@
 name: uat-test
-workload: hello-world-app
+workloadName: hello-world-app
 environment: qa
 appValueFiles: 
 - deployment/hello-world-app/values-qa-uat.yaml

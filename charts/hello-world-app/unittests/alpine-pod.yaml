@@ -1,0 +1,48 @@
+suite: Pod
+release:
+  name: my-release
+  namespace: my-namespace
+templates:
+  - alpine-pod.yaml
+tests:
+  - it: tests defaults
+    asserts:
+      - isKind:
+          of: Pod
+      - equal:
+          path: apiVersion
+          value: v1
+      - equal:
+          path: metadata.name
+          value: my-release-my-alpine
+      - matchRegex:
+          path: metadata.labels["helm.sh/chart"]
+          pattern: ^example-v1-
+      - isNull:
+          path: metadata.annotations
+      - equal:
+          path: metadata.labels["app.kubernetes.io/instance"]
+          value: my-release
+
+  - it: controller restart Always policy
+    set:
+      restartPolicy: Always
+    asserts:
+      - equal:
+          path: spec.restartPolicy
+          value: Always
+
+  - it: controller restart OnFailure policy
+    set:
+      restartPolicy: OnFailure
+    asserts:
+      - equal:
+          path: spec.restartPolicy
+          value: OnFailure
+
+  - it: controller restart Never policy
+    asserts:
+      - equal:
+          path: spec.restartPolicy
+          value: Never
+

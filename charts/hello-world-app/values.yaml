@@ -1,0 +1,8 @@
+Name: my-alpine
+test:
+  Name: initial-values
+
+global:
+  param:
+    infra:
+      databaseUrl: default-db-url

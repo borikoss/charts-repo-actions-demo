@@ -20,4 +20,6 @@ jobs:
 
       - name: Generate Manifests
         run: |
-          .github/workflows/utils/generate-manifests.py deploymentTargets/${{ matrix.deployment_target }}
+          .github/workflows/utils/generate-manifests.py \
+            ${{ github.workspace }}/deploymentTargets/${{ matrix.deployment_target }} \
+            ${{ github.workspace }}/charts/${{ matrix.deployment_target }}

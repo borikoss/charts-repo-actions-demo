@@ -24,7 +24,7 @@ def parse_yaml_files(directory):
                 with open(file_path, "r") as yaml_file:
                     yaml_data = yaml.safe_load(yaml_file)
                     yaml_data_list.append(yaml_data)
-                    print(f"Parsed '{filename}' successfully.")
+                    print(f"Parsed deploymentTarget '{filename}' successfully.")
             except Exception as e:
                 print(f"Error parsing '{filename}': {str(e)}")
 
@@ -32,15 +32,20 @@ def parse_yaml_files(directory):
 
 if __name__ == "__main__":
     # Check if a directory path argument is provided
-    if len(sys.argv) != 2:
-        print("Usage: python script.py <directory_path>")
+    if len(sys.argv) != 3:
+        print("Usage: python script.py <deployment_targets_path> <helm_chart_path>")
         sys.exit(1)
 
     # Input: Get the directory path from the command-line argument
-    directory_path = sys.argv[1]
+    deployment_targets_path = sys.argv[1]
+    print(f"DeploymentTarget path: '{deployment_targets_path}'")
+
+    # Input: Get the directory path from the command-line argument
+    helm_chart_path = sys.argv[2]
+    print(f"Helm chart path: '{helm_chart_path}'")
 
     # Call the function to parse YAML files in the directory
-    parsed_yaml_data = parse_yaml_files(directory_path)
+    parsed_yaml_data = parse_yaml_files(deployment_targets_path)
 
     # You can now work with the parsed YAML data as a list of dictionaries
     for data in parsed_yaml_data:

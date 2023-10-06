@@ -2,7 +2,7 @@
 name: functional-test
 
 # Workload app
-workload: hello-world-app
+workloadName: hello-world-app
 
 # environment 
 environment: dev
