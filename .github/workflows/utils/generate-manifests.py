@@ -41,20 +41,22 @@ def create_folder(folder_name):
     except Exception as e:
         print(f"An error occurred: {str(e)}")
 
-def run_helm_template_cmd(chart_path, release_name, values_file, output_manifest):
+def run_helm_template_cmd(chart_path, release_name, value_files, output_manifest_file):
     try:
         # Construct the Helm command
         helm_command = [
             "helm",
             "template",
             release_name,
-            chart_path,
-            "--values",
-            values_file
+            chart_path
         ]
 
+        # Add each value file using the "--values" flag
+        for value_file in value_files:
+            helm_command.extend(["--values", value_file])
+
         # Run the Helm command and send output to the file
-        with open(output_manifest,'w') as f_obj:
+        with open(output_manifest_file,'w') as f_obj:
             subprocess.run(helm_command,stdout=f_obj,text=True,check=True)
 
         print(f"Helm template command executed successfully.")
@@ -92,9 +94,11 @@ if __name__ == "__main__":
         print(data)
     
     # Run helm template command to a file output
-    run_helm_template_cmd(
-        helm_chart_path, 
-        "my-release", 
-        "deploymentTargets/hello-world-app/helm-values/values-dev.yaml",
-        "/home/runner/work/charts-repo-actions-demo/charts-repo-actions-demo/generated_manifests/test.yaml"
-    )
+    value_files = [
+        "deploymentTargets/hello-world-app/helm-values/values-dev.yaml", 
+        "deploymentTargets/hello-world-app/helm-values/values-qa.yaml"
+        ]
+    release_name = "my-release"
+    output_manifest_file = os.path.join(gen_manifests_path, "test.yaml")
+
+    run_helm_template_cmd(helm_chart_path, release_name, value_files, output_manifest_file)
