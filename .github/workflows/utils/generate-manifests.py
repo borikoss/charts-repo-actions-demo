@@ -65,6 +65,36 @@ def run_helm_template_cmd(chart_path, release_name, value_files, output_manifest
     except Exception as e:
         print(f"An error occurred: {str(e)}")
 
+def run_command_in_folder(command, working_directory):
+    try:
+        # Run the command in the specified working directory
+        result = subprocess.run(command, shell=True, cwd=working_directory, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        
+        # Check for errors and print output
+        if result.returncode == 0:
+            print(f"Command '{command}' executed successfully.")
+            print("Output:")
+            print(result.stdout)
+        else:
+            print(f"Error running command '{command}':")
+            print("Standard Output:")
+            print(result.stdout)
+            print("Standard Error:")
+            print(result.stderr)
+    
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+
+def output_file_content(file_path):
+    try:
+        with open(file_path, "r") as file:
+            file_content = file.read()
+            return file_content
+    except FileNotFoundError:
+        return f"The file '{file_path}' was not found."
+    except Exception as e:
+        return f"An error occurred: {str(e)}"
+
 if __name__ == "__main__":
     # Check if a directory path argument is provided
     if len(sys.argv) != 4:
@@ -114,11 +144,11 @@ if __name__ == "__main__":
         # Run Helm template
         run_helm_template_cmd(helm_chart_path, helm_release_name, helm_value_files, output_manifest_file)
 
-    # test Run helm template command to a file output
-    # value_files = [
-    #     "deploymentTargets/hello-world-app/helm-values/values-dev.yaml", 
-    #     "deploymentTargets/hello-world-app/helm-values/values-qa.yaml"
-    #     ]
-    # release_name = "my-release"
-    # output_manifest_file = os.path.join(gen_manifests_path, "gen_manifests.yaml")
-    # run_helm_template_cmd(helm_chart_path, release_name, value_files, output_manifest_file)
+        # Run kustomize command in the generated manifests folder
+        # command_to_run = "kustomize create --autodetect"
+        # run_command_in_folder(command_to_run, gen_manifests_deployment_target)
+
+        # Print generated file content
+        content = output_file_content(output_manifest_file)
+        if content is not None:
+            print(content)
