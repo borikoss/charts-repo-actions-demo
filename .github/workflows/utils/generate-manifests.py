@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+import sys
 import yaml
 
 def parse_yaml_files(directory):
@@ -29,12 +30,18 @@ def parse_yaml_files(directory):
 
     return yaml_data_list
 
-# Specify the directory containing YAML files
-directory_path = "deployment/deploymentTargets/hello-world-app/"
+if __name__ == "__main__":
+    # Check if a directory path argument is provided
+    if len(sys.argv) != 2:
+        print("Usage: python script.py <directory_path>")
+        sys.exit(1)
 
-# Call the function to parse YAML files in the directory
-parsed_yaml_data = parse_yaml_files(directory_path)
+    # Input: Get the directory path from the command-line argument
+    directory_path = sys.argv[1]
 
-# You can now work with the parsed YAML data as a list of dictionaries
-for data in parsed_yaml_data:
-    print(data)
+    # Call the function to parse YAML files in the directory
+    parsed_yaml_data = parse_yaml_files(directory_path)
+
+    # You can now work with the parsed YAML data as a list of dictionaries
+    for data in parsed_yaml_data:
+        print(data)
