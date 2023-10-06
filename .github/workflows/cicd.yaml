@@ -6,15 +6,15 @@ on:
 jobs:
 
   Deploy_To_Dev:
-      runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
         deployment_target:
           - "hello-world-app"
+      fail-fast: false
 
-      environment: dev            
-      steps:
+    steps:
       - name: Checkout Source
         uses: actions/checkout@v4
 
