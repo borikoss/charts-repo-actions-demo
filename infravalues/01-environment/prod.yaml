@@ -1,0 +1,11 @@
+global:
+  param:
+    infra:
+      SOME_INFRA_ENVIRONMENT_VARIABLE: "true"
+      DATABASE_URL: mysql://west:8806/mysql4
+    ars:
+      SOME_ARS_ENVIRONMENT_VARIABLE: "true"
+    solace:
+      SOME_SOLACE_ENVIRONMENT_VARIABLE: "true"
+    sap:
+      SOME_SAP_ENVIRONMENT_VARIABLE: "false"

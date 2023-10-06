@@ -1,11 +1,25 @@
-name: green
-workloadName: hello-world-app
+# Name of the Deployment target
+deploymentTargetName: green
+
+# Workload app name
+workloadAppName: hello-world-app
+
+# environment 
 environment: prod
+
+# Helm application value files
 appValueFiles: 
-- deployment/hello-world-app/values-prod-green.yaml
-infraValueScopes:
-  environment: prod
+- deploymentTargets/hello-world-app/helm-values/values-prod-green.yaml
+
+# Helm infrastructure value files
+# The higher numbers - the higher precedence and overrides
+infraValueFiles:
+- infravalues/default.yaml
+- infravalues/01-environment/prod.yaml
+- infravalues/02-datacenterlocation/ldc.yaml
+
+# GitOps repository
 manifests:
   repo: kalypso-app-gitops.git
   branch: main
-  path: green
+  path: ./green

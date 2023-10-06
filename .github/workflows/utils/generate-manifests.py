@@ -83,22 +83,42 @@ if __name__ == "__main__":
     gen_manifests_path = sys.argv[3]
     print(f"Generated Helm manifests path: '{gen_manifests_path}'")
 
-    # Create folder for generated helm manifests
+    # Create base folder for generated helm manifests
     create_folder(gen_manifests_path)
 
     # Call the function to parse YAML files in the directory
     parsed_yaml_data = parse_yaml_files(deployment_targets_path)
 
-    # You can now work with the parsed YAML data as a list of dictionaries
+    # Work with the parsed YAML data as a list of dictionaries
     for data in parsed_yaml_data:
+        print(f"Parsed YAML data as a list of dictionaries:")
         print(data)
-    
-    # Run helm template command to a file output
-    value_files = [
-        "deploymentTargets/hello-world-app/helm-values/values-dev.yaml", 
-        "deploymentTargets/hello-world-app/helm-values/values-qa.yaml"
-        ]
-    release_name = "my-release"
-    output_manifest_file = os.path.join(gen_manifests_path, "test.yaml")
 
-    run_helm_template_cmd(helm_chart_path, release_name, value_files, output_manifest_file)
+        # construct and create folder for environment
+        gen_manifests_env_path = os.path.join(gen_manifests_path, data["environment"])
+        create_folder(gen_manifests_env_path)
+
+        # construct and create folder for deploymentTarget
+        gen_manifests_deployment_target = os.path.join(gen_manifests_env_path, data["deploymentTargetName"])
+        create_folder(gen_manifests_deployment_target)
+
+        # construct list of Helm value files
+        helm_value_files = data["appValueFiles"] + data["infraValueFiles"]
+
+        # construct Helm release name
+        helm_release_name = data["workloadAppName"] + '-' + data["deploymentTargetName"]
+
+        # Construct file path for Helm output
+        output_manifest_file = os.path.join(gen_manifests_deployment_target, "gen_manifests.yaml")
+
+        # Run Helm template
+        run_helm_template_cmd(helm_chart_path, helm_release_name, helm_value_files, output_manifest_file)
+
+    # test Run helm template command to a file output
+    # value_files = [
+    #     "deploymentTargets/hello-world-app/helm-values/values-dev.yaml", 
+    #     "deploymentTargets/hello-world-app/helm-values/values-qa.yaml"
+    #     ]
+    # release_name = "my-release"
+    # output_manifest_file = os.path.join(gen_manifests_path, "gen_manifests.yaml")
+    # run_helm_template_cmd(helm_chart_path, release_name, value_files, output_manifest_file)

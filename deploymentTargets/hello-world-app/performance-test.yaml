@@ -1,11 +1,11 @@
 # Name of the Deployment target
-deploymentTargetName: functional-test
+deploymentTargetName: performance-test
 
 # Workload app name
 workloadAppName: hello-world-app
 
 # environment 
-environment: dev
+environment: qa
 
 # Helm application value files
 appValueFiles: 
@@ -16,11 +16,11 @@ appValueFiles:
 # The higher numbers - the higher precedence and overrides
 infraValueFiles:
 - infravalues/default.yaml
-- infravalues/01-environment/prod.yaml
+- infravalues/01-environment/dev.yaml
 - infravalues/02-datacenterlocation/ldc.yaml
 
 # GitOps repository
 manifests:
   repo: kalypso-app-gitops.git
   branch: main
-  path: ./functional-test
+  path: ./performance-test
