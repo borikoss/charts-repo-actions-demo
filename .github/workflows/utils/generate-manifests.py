@@ -30,6 +30,16 @@ def parse_yaml_files(directory):
 
     return yaml_data_list
 
+def create_folder(folder_name):
+    try:
+        # Create the folder
+        os.mkdir(folder_name)
+        print(f"Folder '{folder_name}' created successfully.")
+    except FileExistsError:
+        print(f"Folder '{folder_name}' already exists.")
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+
 if __name__ == "__main__":
     # Check if a directory path argument is provided
     if len(sys.argv) != 4:
@@ -47,6 +57,9 @@ if __name__ == "__main__":
     # Input: Get the generated Helm manifests path from the command-line argument
     gen_manifests_path = sys.argv[3]
     print(f"Generated Helm manifests path: '{gen_manifests_path}'")
+
+    # Create folder for generated helm manifests
+    create_folder(gen_manifests_path)
 
     # Call the function to parse YAML files in the directory
     parsed_yaml_data = parse_yaml_files(deployment_targets_path)
