@@ -18,9 +18,3 @@ infraValueFiles:
 - infravalues/default.yaml
 - infravalues/01-environment/dev.yaml
 - infravalues/02-datacenterlocation/ldc.yaml
-
-# GitOps repository
-manifests:
-  repo: kalypso-app-gitops.git
-  branch: main
-  path: ./functional-test

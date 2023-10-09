@@ -3,6 +3,10 @@ name: cicd
 on:
   - push
 
+env:
+  GITOPS_REPO_URL: https://github.com/borikoss/charts-repo-actions-demo-gitops
+  GITOPS_REPO_BRANCH: main
+
 jobs:
 
   Build_Generate:
@@ -58,8 +62,8 @@ jobs:
           .github/workflows/utils/create-pr.sh \
             -s ${{ github.workspace }}/generated_manifests/dev \
             -d dev \
-            -r https://github.com/borikoss/charts-repo-actions-demo-gitops \
-            -b main \
+            -r ${{ env.GITOPS_REPO_URL }} \
+            -b ${{ env.GITOPS_REPO_BRANCH }} \
             -i ${{ github.run_number }} \
             -t ${{ secrets.GITOPS_REPO_COMMIT_TOKEN }} -m Y
 
@@ -86,8 +90,8 @@ jobs:
           .github/workflows/utils/create-pr.sh \
             -s ${{ github.workspace }}/generated_manifests/qa \
             -d qa \
-            -r https://github.com/borikoss/charts-repo-actions-demo-gitops \
-            -b main \
+            -r ${{ env.GITOPS_REPO_URL }} \
+            -b ${{ env.GITOPS_REPO_BRANCH }} \
             -i ${{ github.run_number }} \
             -t ${{ secrets.GITOPS_REPO_COMMIT_TOKEN }} -m N
 
@@ -114,7 +118,7 @@ jobs:
           .github/workflows/utils/create-pr.sh \
             -s ${{ github.workspace }}/generated_manifests/prod \
             -d prod \
-            -r https://github.com/borikoss/charts-repo-actions-demo-gitops \
-            -b main \
+            -r ${{ env.GITOPS_REPO_URL }} \
+            -b ${{ env.GITOPS_REPO_BRANCH }} \
             -i ${{ github.run_number }} \
             -t ${{ secrets.GITOPS_REPO_COMMIT_TOKEN }} -m N
