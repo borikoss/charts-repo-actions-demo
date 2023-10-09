@@ -29,7 +29,7 @@ jobs:
             ${{ github.workspace }}/charts/${{ matrix.chart_name }} \
             ${{ github.workspace }}/generated_manifests
 
-      - name: See Artifact lists
+      - name: See generated manifests list
         run: |
           find generated_manifests/ -print
 
@@ -55,10 +55,6 @@ jobs:
         with:
           name: generated_manifests
           path: generated_manifests/
-
-      - name: See Artifact
-        run: |
-          find generated_manifests/ -print
 
       - name: Create PR to GitOps repo
         run: |        
@@ -87,10 +83,6 @@ jobs:
           name: generated_manifests
           path: generated_manifests/
 
-      - name: See Artifact
-        run: |
-          find generated_manifests/ -print
-
       - name: Create PR to GitOps repo
         run: |        
           .github/workflows/utils/create-pr.sh \
@@ -117,10 +109,6 @@ jobs:
         with:
           name: generated_manifests
           path: generated_manifests/
-
-      - name: See Artifact
-        run: |
-          find generated_manifests/ -print
 
       - name: Create PR to GitOps repo
         run: |        
