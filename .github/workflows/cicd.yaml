@@ -43,6 +43,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: generated_manifests
+          path: generated_manifests/
 
       - name: Use Artifact
         run: |
