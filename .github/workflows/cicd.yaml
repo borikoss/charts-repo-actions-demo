@@ -29,8 +29,8 @@ jobs:
       - name: Create PR to GitOps repo
         run: |        
           .github/workflows/utils/create-pr.sh \
-            -s ${{ github.workspace }}/generated_manifests \
-            -d . \
+            -s ${{ github.workspace }}/generated_manifests/dev \
+            -d dev \
             -r https://github.com/borikoss/charts-repo-actions-demo-gitops \
             -b main \
             -i ${{ github.run_number }} \
