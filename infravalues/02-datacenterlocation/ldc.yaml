@@ -2,4 +2,4 @@ global:
   param:
     infra:
       SOME_INFRA_ENVIRONMENT_VARIABLE: "false"
-      databaseUrl: mysql://east:8806/mysql-ldc
+      databaseUrl: mysql://east:8806/mysql-ldc2
