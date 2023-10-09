@@ -67,7 +67,7 @@ echo "git status"
 git status
 echo `git status --porcelain | head -1`
 if [[ `git status --porcelain | head -1` ]]; then
-    git commit -m "Deploy ID $DEPLOY_ID to DEST_FOLDER $DEST_FOLDER on DEST_BRANCH $DEST_BRANCH"
+    git commit -m "Deployment ID $DEPLOY_ID to $DEST_FOLDER on $DEST_BRANCH-branch"
 
     # Push to the deploy branch 
     echo "Push to the deploy branch $deploy_branch_name"
@@ -80,7 +80,7 @@ if [[ `git status --porcelain | head -1` ]]; then
     owner_repo="${DEST_REPO#https://github.com/}"
     echo $owner_repo
     export GITHUB_TOKEN=$TOKEN
-    pr_response=$(gh pr create --repo $repo_url --base $DEST_BRANCH --head $deploy_branch_name --title "Deploy ID $DEPLOY_ID to DEST_FOLDER $DEST_FOLDER on DEST_BRANCH $DEST_BRANCH" --body "Deploy to DEST_FOLDER $DEST_FOLDER")
+    pr_response=$(gh pr create --repo $repo_url --base $DEST_BRANCH --head $deploy_branch_name --title "Deployment ID $DEPLOY_ID to $DEST_FOLDER on $DEST_BRANCH-branch" --body "Deploy to DEST_FOLDER $DEST_FOLDER")
     echo $pr_response
     if [[ "$AUTO_MERGE" == "Y" ]]; then
         pr_num="${pr_response##*pull/}"
