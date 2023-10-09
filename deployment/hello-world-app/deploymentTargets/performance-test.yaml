@@ -2,7 +2,7 @@
 deploymentTargetName: performance-test
 
 # Application workload chart release name
-chartReleaseName: hello-world-app
+chartReleaseName: my-hello-world-app
 
 # Environment
 environment: qa
