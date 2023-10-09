@@ -61,7 +61,7 @@ jobs:
             -r https://github.com/borikoss/charts-repo-actions-demo-gitops \
             -b main \
             -i ${{ github.run_number }} \
-            -t ${{ secrets.GITOPS_REPO_COMMIT_TOKEN }} -m N
+            -t ${{ secrets.GITOPS_REPO_COMMIT_TOKEN }} -m Y
 
   Deploy_To_Qa:
     runs-on: ubuntu-latest
