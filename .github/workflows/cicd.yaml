@@ -44,6 +44,11 @@ jobs:
         with:
           name: generated_manifests
 
+      - name: Use Artifact
+        run: |
+          # Access the saved folder and its contents.
+          ls -la ; ls generated_manifests/
+
       - name: Create PR to GitOps repo
         run: |        
           .github/workflows/utils/create-pr.sh \
