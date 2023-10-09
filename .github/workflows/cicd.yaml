@@ -25,10 +25,25 @@ jobs:
             ${{ github.workspace }}/charts/${{ matrix.chart_name }} \
             ${{ github.workspace }}/generated_manifests
 
+      - name: Upload Artifact generated_manifests
+        uses: actions/upload-artifact@v3
+        with:
+          name: generated_manifests
+          path: generated_manifests/
+
   Deploy_To_Dev:
     runs-on: ubuntu-latest
     needs: Build_Generate
+
     steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Download Artifact generated_manifests
+        uses: actions/download-artifact@v3
+        with:
+          name: generated_manifests
+
       - name: Create PR to GitOps repo
         run: |        
           .github/workflows/utils/create-pr.sh \
