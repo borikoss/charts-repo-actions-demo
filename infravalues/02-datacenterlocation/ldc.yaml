@@ -1,5 +1,5 @@
 global:
   param:
     infra:
-      SOME_INFRA_ENVIRONMENT_VARIABLE: "true"
-      DATABASE_URL: mysql://west:8806/mysql2
+      SOME_INFRA_ENVIRONMENT_VARIABLE: "false"
+      DATABASE_URL: mysql://east:8806/mysql-ldc

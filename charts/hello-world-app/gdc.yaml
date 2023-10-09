@@ -1,5 +1,0 @@
-global:
-  param:
-    infra:
-      SOME_INFRA_ENVIRONMENT_VARIABLE: "false"
-      DATABASE_URL: mysql://east:8806/mysql-gdc
