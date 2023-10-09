@@ -67,7 +67,7 @@ echo "git status"
 git status
 echo `git status --porcelain | head -1`
 if [[ `git status --porcelain | head -1` ]]; then
-    git commit -m "deployment $DEPLOY_ID"
+    git commit -m "Deploy ID $DEPLOY_ID to DEST_FOLDER $DEST_FOLDER on DEST_BRANCH $DEST_BRANCH"
 
     # Push to the deploy branch 
     echo "Push to the deploy branch $deploy_branch_name"
