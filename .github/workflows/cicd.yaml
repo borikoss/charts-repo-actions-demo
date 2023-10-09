@@ -22,5 +22,5 @@ jobs:
         run: |
           .github/workflows/utils/generate-manifests.py \
             ${{ github.workspace }}/deployment/${{ matrix.chart_name }}/deploymentTargets/ \
-            ${{ github.workspace }}/charts/${{ matrix.chart_name/ }} \
+            ${{ github.workspace }}/charts/${{ matrix.chart_name }} \
             ${{ github.workspace }}/generated_manifests
