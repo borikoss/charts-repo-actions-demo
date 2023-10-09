@@ -43,6 +43,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: Build_Generate
 
+    env:
+      GITOPS_REPO_FOLDER: dev
+
     steps:
       - name: Checkout Source
         uses: actions/checkout@v4
@@ -60,8 +63,8 @@ jobs:
       - name: Create PR to GitOps repo
         run: |        
           .github/workflows/utils/create-pr.sh \
-            -s ${{ github.workspace }}/generated_manifests/dev \
-            -d dev \
+            -s ${{ github.workspace }}/generated_manifests/${{ env.GITOPS_REPO_FOLDER }} \
+            -d ${{ env.GITOPS_REPO_FOLDER }} \
             -r ${{ env.GITOPS_REPO_URL }} \
             -b ${{ env.GITOPS_REPO_BRANCH }} \
             -i ${{ github.run_number }} \
@@ -71,6 +74,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: [Build_Generate,Deploy_To_Dev]
 
+    env:
+      GITOPS_REPO_FOLDER: qa
+
     steps:
       - name: Checkout Source
         uses: actions/checkout@v4
@@ -88,8 +94,8 @@ jobs:
       - name: Create PR to GitOps repo
         run: |        
           .github/workflows/utils/create-pr.sh \
-            -s ${{ github.workspace }}/generated_manifests/qa \
-            -d qa \
+            -s ${{ github.workspace }}/generated_manifests/${{ env.GITOPS_REPO_FOLDER }} \
+            -d ${{ env.GITOPS_REPO_FOLDER }} \
             -r ${{ env.GITOPS_REPO_URL }} \
             -b ${{ env.GITOPS_REPO_BRANCH }} \
             -i ${{ github.run_number }} \
@@ -99,6 +105,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: [Build_Generate,Deploy_To_Qa]
 
+    env:
+      GITOPS_REPO_FOLDER: prod
+
     steps:
       - name: Checkout Source
         uses: actions/checkout@v4
@@ -116,8 +125,8 @@ jobs:
       - name: Create PR to GitOps repo
         run: |        
           .github/workflows/utils/create-pr.sh \
-            -s ${{ github.workspace }}/generated_manifests/prod \
-            -d prod \
+            -s ${{ github.workspace }}/generated_manifests/${{ env.GITOPS_REPO_FOLDER }} \
+            -d ${{ env.GITOPS_REPO_FOLDER }} \
             -r ${{ env.GITOPS_REPO_URL }} \
             -b ${{ env.GITOPS_REPO_BRANCH }} \
             -i ${{ github.run_number }} \
