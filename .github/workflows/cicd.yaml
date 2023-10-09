@@ -25,6 +25,10 @@ jobs:
             ${{ github.workspace }}/charts/${{ matrix.chart_name }} \
             ${{ github.workspace }}/generated_manifests
 
+      - name: See Artifact
+        run: |
+          find generated_manifests/ -print
+
       - name: Upload Artifact generated_manifests
         uses: actions/upload-artifact@v3
         with:
@@ -45,16 +49,71 @@ jobs:
           name: generated_manifests
           path: generated_manifests/
 
-      - name: Use Artifact
+      - name: See Artifact
         run: |
-          # Access the saved folder and its contents.
-          ls -la ; ls generated_manifests/
+          find generated_manifests/ -print
 
       - name: Create PR to GitOps repo
         run: |        
           .github/workflows/utils/create-pr.sh \
             -s ${{ github.workspace }}/generated_manifests/dev \
             -d dev \
+            -r https://github.com/borikoss/charts-repo-actions-demo-gitops \
+            -b main \
+            -i ${{ github.run_number }} \
+            -t ${{ secrets.GITOPS_REPO_COMMIT_TOKEN }} -m N
+
+  Deploy_To_Qa:
+    runs-on: ubuntu-latest
+    needs: Build_Generate
+
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Download Artifact generated_manifests
+        uses: actions/download-artifact@v3
+        with:
+          name: generated_manifests
+          path: generated_manifests/
+
+      - name: See Artifact
+        run: |
+          find generated_manifests/ -print
+
+      - name: Create PR to GitOps repo
+        run: |        
+          .github/workflows/utils/create-pr.sh \
+            -s ${{ github.workspace }}/generated_manifests/qa \
+            -d qa \
+            -r https://github.com/borikoss/charts-repo-actions-demo-gitops \
+            -b main \
+            -i ${{ github.run_number }} \
+            -t ${{ secrets.GITOPS_REPO_COMMIT_TOKEN }} -m N
+
+  Deploy_To_Prod:
+    runs-on: ubuntu-latest
+    needs: Build_Generate
+
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Download Artifact generated_manifests
+        uses: actions/download-artifact@v3
+        with:
+          name: generated_manifests
+          path: generated_manifests/
+
+      - name: See Artifact
+        run: |
+          find generated_manifests/ -print
+
+      - name: Create PR to GitOps repo
+        run: |        
+          .github/workflows/utils/create-pr.sh \
+            -s ${{ github.workspace }}/generated_manifests/prod \
+            -d prod \
             -r https://github.com/borikoss/charts-repo-actions-demo-gitops \
             -b main \
             -i ${{ github.run_number }} \
