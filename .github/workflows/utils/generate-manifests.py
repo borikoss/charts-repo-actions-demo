@@ -128,15 +128,15 @@ if __name__ == "__main__":
         gen_manifests_env_path = os.path.join(gen_manifests_path, data["environment"])
         create_folder(gen_manifests_env_path)
 
-        # construct and create folder for deploymentTarget
-        gen_manifests_deployment_target = os.path.join(gen_manifests_env_path, data["deploymentTargetName"])
+        # Construct Helm release name
+        helm_release_name = data["chartReleaseName"]
+
+        # construct and create folder for chartReleaseName and deploymentTarget
+        gen_manifests_deployment_target = os.path.join(gen_manifests_env_path, helm_release_name + "-" + data["deploymentTargetName"])
         create_folder(gen_manifests_deployment_target)
 
         # construct list of Helm value files
         helm_value_files = data["appValueFiles"] + data["infraValueFiles"]
-
-        # Construct Helm release name
-        helm_release_name = data["chartReleaseName"]
 
         # Construct file path for Helm output
         output_manifest_file = os.path.join(gen_manifests_deployment_target, "gen_manifests.yaml")
