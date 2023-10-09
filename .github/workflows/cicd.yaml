@@ -25,3 +25,13 @@ jobs:
             ${{ github.workspace }}/deployment/${{ matrix.chart_name }}/deploymentTargets/ \
             ${{ github.workspace }}/charts/${{ matrix.chart_name }} \
             ${{ github.workspace }}/generated_manifests
+
+      - name: Create PR to GitOps repo
+        run: |        
+          .github/workflows/utils/create-pr.sh \
+            -s ${{ github.workspace }}/generated_manifests \
+            -d . \
+            -r https://github.com/borikoss/charts-repo-actions-demo-gitops \
+            -b main \
+            -i ${{ github.run_number }} \
+            -t ${{ secrets.GITOPS_REPO_COMMIT_TOKEN }} -m N
