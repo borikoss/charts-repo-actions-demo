@@ -27,7 +27,7 @@ jobs:
 
   Deploy_To_Dev:
     runs-on: ubuntu-latest
-    needs: Build_Push_Image
+    needs: Build_Generate
     steps:
       - name: Create PR to GitOps repo
         run: |        
