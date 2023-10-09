@@ -5,6 +5,8 @@
 
 #!/usr/bin/env bash
 
+set -x
+
 while getopts "s:d:r:b:i:t:e:m:" option;
     do
     case "$option" in
