@@ -8,4 +8,5 @@ maintainers:
 name: hello-world-app
 sources:
   - https://github.com/helm/helm
-version: 0.1.19
+version: 0.1.20
+
