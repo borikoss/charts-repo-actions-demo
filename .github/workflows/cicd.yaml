@@ -12,6 +12,7 @@ jobs:
       matrix:
         chart_name:
           - "hello-world-app"
+          - "example-v2"
       fail-fast: false
 
     steps:
