@@ -2,7 +2,7 @@ global:
   param:
     infra:
       SOME_INFRA_ENVIRONMENT_VARIABLE: "true"
-      databaseUrl: mysql://west:8806/mysql4-dev
+      databaseUrl: mysql://west:8806/mysql4-dev2
     ars:
       SOME_ARS_ENVIRONMENT_VARIABLE: "true"
     solace:
