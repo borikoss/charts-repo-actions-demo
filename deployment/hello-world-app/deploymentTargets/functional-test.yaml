@@ -4,7 +4,7 @@ deploymentTargetName: functional-test
 # Application workload chart release name
 chartReleaseName: my-hello-world-app
 
-# Environment 
+# Environment
 environment: dev
 
 # Helm application value files
