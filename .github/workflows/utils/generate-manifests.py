@@ -135,8 +135,8 @@ if __name__ == "__main__":
         # construct list of Helm value files
         helm_value_files = data["appValueFiles"] + data["infraValueFiles"]
 
-        # construct Helm release name
-        helm_release_name = data["workloadAppName"] + '-' + data["deploymentTargetName"]
+        # Construct Helm release name
+        helm_release_name = data["chartReleaseName"]
 
         # Construct file path for Helm output
         output_manifest_file = os.path.join(gen_manifests_deployment_target, "gen_manifests.yaml")

@@ -1,26 +1,25 @@
 # Name of the Deployment target
-deploymentTargetName: performance-test
+deploymentTargetName: green
 
-# Workload app name
-workloadAppName: hello-world-app
+# Application workload chart release name
+chartReleaseName: hello-world-app
 
-# environment 
-environment: qa
+# Environment
+environment: prod
 
 # Helm application value files
 appValueFiles: 
-- deploymentTargets/hello-world-app/helm-values/values-dev.yaml
-- deploymentTargets/hello-world-app/helm-values/values-uat.yaml
+- deployment/hello-world-app/helm-values/values-prod-green.yaml
 
 # Helm infrastructure value files
 # The higher numbers - the higher precedence and overrides
 infraValueFiles:
 - infravalues/default.yaml
-- infravalues/01-environment/dev.yaml
+- infravalues/01-environment/prod.yaml
 - infravalues/02-datacenterlocation/ldc.yaml
 
 # GitOps repository
 manifests:
   repo: kalypso-app-gitops.git
   branch: main
-  path: ./performance-test
+  path: ./green

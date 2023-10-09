@@ -1,15 +1,16 @@
 # Name of the Deployment target
-deploymentTargetName: green
+deploymentTargetName: functional-test
 
-# Workload app name
-workloadAppName: hello-world-app
+# Application workload chart release name
+chartReleaseName: hello-world-app
 
-# environment 
-environment: prod
+# Environment 
+environment: dev
 
 # Helm application value files
 appValueFiles: 
-- deploymentTargets/hello-world-app/helm-values/values-prod-green.yaml
+- deployment/hello-world-app/helm-values/values-dev.yaml
+- deployment/hello-world-app/helm-values/values-uat.yaml
 
 # Helm infrastructure value files
 # The higher numbers - the higher precedence and overrides
@@ -22,4 +23,4 @@ infraValueFiles:
 manifests:
   repo: kalypso-app-gitops.git
   branch: main
-  path: ./green
+  path: ./functional-test
