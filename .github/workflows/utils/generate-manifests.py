@@ -4,6 +4,7 @@ import os
 import sys
 import yaml
 import subprocess
+import shutil
 
 def parse_yaml_files_in_directory(directory):
 
@@ -70,8 +71,8 @@ def run_helm_template_cmd(chart_path, release_name, value_files, output_manifest
 def remove_directory_if_exists(directory_path):
     if os.path.exists(directory_path):
         try:
-            os.rmdir(directory_path)  # Remove the directory
-            print(f"Directory '{directory_path}' removed.")
+            shutil.rmtree(directory_path)  # Remove the directory
+            print(f"Directory incl. content '{directory_path}' removed.")
             return True
         except OSError as e:
             print(f"Error removing directory '{directory_path}': {str(e)}")
