@@ -93,16 +93,20 @@ def output_file_content(file_path):
 
 if __name__ == "__main__":
     # Check if a directory path argument is provided
-    if len(sys.argv) != 3:
-        print("Usage: python script.py <deployment_targets_path> <gen_manifests_path>")
+    if len(sys.argv) != 4:
+        print("Usage: python script.py <workspace_path> <deployment_targets_path> <gen_manifests_path>")
         sys.exit(1)
 
+    # Input: Get the workspace path from the command-line argument
+    workspace_path = sys.argv[1]
+    print(f"Workspace path: '{workspace_path}'")
+
     # Input: Get the directory path from the command-line argument
-    deployment_targets_path = sys.argv[1]
-    print(f"DeploymentTarget path: '{deployment_targets_path}'")
+    deployment_targets_path = sys.argv[2]
+    print(f"Deployment targets path: '{deployment_targets_path}'")
 
     # Input: Get the generated Helm manifests path from the command-line argument
-    gen_manifests_path = sys.argv[2]
+    gen_manifests_path = sys.argv[3]
     print(f"Generated manifests path: '{gen_manifests_path}'")
 
     # Create base folder for generated helm manifests
@@ -137,19 +141,19 @@ if __name__ == "__main__":
         helm_chart_repository_url = data["chart"]["repository"]
         if helm_chart_repository_url.startswith("file://"):
             is_helm_chart_local = True
-            helm_chart_repository_url = helm_chart_repository_url[len("file://"):]
-        print(f"Helm chart repostiroy url: '{helm_chart_repository_url}'")
+            helm_chart_path = os.path.join(workspace_path,helm_chart_repository_url[len("file://"):])
 
         # Helm chart pull from repo
         if is_helm_chart_local is not True:
             helm_chart_repository_name = data["chart"]["name"] + "-repo"
             helm_chart_version = data["chart"]["version"]
-            helm_chart_untardir = os.path.join(".","charts_upstream")
+            helm_chart_untardir = os.path.join(workspace_path,"charts_upstream")
+            helm_chart_path = os.path.join(helm_chart_untardir,helm_chart_name)
 
             command = ["helm", "repo", "add", helm_chart_repository_name, helm_chart_repository_url]
             subprocess.run(command,text=True,check=True)
 
-            remove_directory_if_exists(os.path.join(helm_chart_untardir,helm_chart_name))
+            #remove_directory_if_exists(helm_chart_path)
 
             command = ["helm", "pull", helm_chart_repository_name + "/" + helm_chart_name]
             command.extend(["--version", helm_chart_version])
@@ -157,6 +161,7 @@ if __name__ == "__main__":
             command.extend(["--untardir", helm_chart_untardir])
             subprocess.run(command,text=True,check=True)
 
+        print(f"Helm chart path: '{helm_chart_path}'")
 
         # Run Helm template
         #run_helm_template_cmd(helm_chart_path, helm_release_name, helm_value_files, output_manifest_file)
