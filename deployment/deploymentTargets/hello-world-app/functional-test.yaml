@@ -21,5 +21,5 @@ chart:
   releaseName: my-hello-world-app
   name: hello-world-app
   version: 19.0.2
-  repository: "file://chart/hello-world-app"
+  repository: "file://charts/hello-world-app"
 
