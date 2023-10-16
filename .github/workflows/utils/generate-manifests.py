@@ -67,25 +67,18 @@ def run_helm_template_cmd(chart_path, release_name, value_files, output_manifest
     except Exception as e:
         print(f"An error occurred: {str(e)}")
 
-def run_command_in_folder(command, working_directory):
-    try:
-        # Run the command in the specified working directory
-        result = subprocess.run(command, shell=True, cwd=working_directory, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        
-        # Check for errors and print output
-        if result.returncode == 0:
-            print(f"Command '{command}' executed successfully.")
-            print("Output:")
-            print(result.stdout)
-        else:
-            print(f"Error running command '{command}':")
-            print("Standard Output:")
-            print(result.stdout)
-            print("Standard Error:")
-            print(result.stderr)
-    
-    except Exception as e:
-        print(f"An error occurred: {str(e)}")
+def remove_directory_if_exists(directory_path):
+    if os.path.exists(directory_path):
+        try:
+            os.rmdir(directory_path)  # Remove the directory
+            print(f"Directory '{directory_path}' removed.")
+            return True
+        except OSError as e:
+            print(f"Error removing directory '{directory_path}': {str(e)}")
+            return False
+    else:
+        print(f"Directory '{directory_path}' does not exist.")
+        return True  # The directory doesn't exist, so it's considered "removed"
 
 def output_file_content(file_path):
     try:
@@ -117,37 +110,55 @@ if __name__ == "__main__":
     # Parse YAML files in the directory
     parsed_yaml_data = parse_yaml_files_in_directory(deployment_targets_path)
 
-    sys.exit(0)  # Success
-
-
     # Work with the parsed YAML data as a list of dictionaries
     for data in parsed_yaml_data:
-        print(f"Parsed YAML data as a list of dictionaries:")
-        print(data)
 
-        # construct and create folder for environment
-        gen_manifests_env_path = os.path.join(gen_manifests_path, data["environment"])
+        # Create folder for deployment environment
+        gen_manifests_env_path = os.path.join(gen_manifests_path, data["deployment"]["environment"])
         create_folder(gen_manifests_env_path)
 
-        # Construct Helm release name
-        helm_release_name = data["chartReleaseName"]
+        # Collect Helm chart attributed
+        helm_release_name = data["chart"]["releaseName"]
+        helm_chart_name = data["chart"]["name"]
 
-        # construct and create folder for chartReleaseName and deploymentTarget
-        gen_manifests_deployment_target = os.path.join(gen_manifests_env_path, helm_release_name + "-" + data["deploymentTargetName"])
+        # Construct and create manifest path for generated deployment target
+        gen_manifests_deployment_target = os.path.join(gen_manifests_env_path, helm_release_name + "-" + data["deployment"]["targetName"])
         create_folder(gen_manifests_deployment_target)
-
-        # construct list of Helm value files
-        helm_value_files = data["appValueFiles"] + data["infraValueFiles"]
 
         # Construct file path for Helm output
         output_manifest_file = os.path.join(gen_manifests_deployment_target, "gen_manifests.yaml")
 
-        # Run Helm template
-        run_helm_template_cmd(helm_chart_path, helm_release_name, helm_value_files, output_manifest_file)
+        # Construct list of Helm value files
+        helm_value_files = data["deployment"]["valueFiles"]["application"] + data["deployment"]["valueFiles"]["infrastructure"]
 
-        # Run kustomize command in the generated manifests folder
-        # command_to_run = "kustomize create --autodetect"
-        # run_command_in_folder(command_to_run, gen_manifests_deployment_target)
+        # Process helm chart repository url
+        is_helm_chart_local = False
+        helm_chart_repository_url = data["chart"]["repository"]
+        if helm_chart_repository_url.startswith("file://"):
+            is_helm_chart_local = True
+            helm_chart_repository_url = helm_chart_repository_url[len("file://"):]
+        print(f"Helm chart repostiroy url: '{helm_chart_repository_url}'")
+
+        # Helm chart pull from repo
+        if is_helm_chart_local is not True:
+            helm_chart_repository_name = data["chart"]["name"] + "-repo"
+            helm_chart_version = data["chart"]["version"]
+            helm_chart_untardir = os.path.join(".","charts_upstream")
+
+            command = ["helm", "repo", "add", helm_chart_repository_name, helm_chart_repository_url]
+            subprocess.run(command,text=True,check=True)
+
+            remove_directory_if_exists(os.path.join(helm_chart_untardir,helm_chart_name))
+
+            command = ["helm", "pull", helm_chart_repository_name + "/" + helm_chart_name]
+            command.extend(["--version", helm_chart_version])
+            command.extend(["--untar"])
+            command.extend(["--untardir", helm_chart_untardir])
+            subprocess.run(command,text=True,check=True)
+
+
+        # Run Helm template
+        #run_helm_template_cmd(helm_chart_path, helm_release_name, helm_value_files, output_manifest_file)
 
         # Print generated file content
         content = output_file_content(output_manifest_file)
