@@ -38,6 +38,7 @@ jobs:
 
     env:
       GITOPS_REPO_FOLDER: dev
+      GITOPS_REPO_AUTO_MERGE: "Y"
 
     steps:
       - name: Checkout Source
@@ -57,7 +58,8 @@ jobs:
             -r ${{ env.GITOPS_REPO_URL }} \
             -b ${{ env.GITOPS_REPO_BRANCH }} \
             -i ${{ github.run_number }} \
-            -t ${{ secrets.GITOPS_REPO_COMMIT_TOKEN }} -m Y
+            -t ${{ secrets.GITOPS_REPO_COMMIT_TOKEN }} \
+            -m ${{ env.GITOPS_REPO_AUTO_MERGE }}
 
   Deploy_To_Qa:
     runs-on: ubuntu-latest
@@ -65,6 +67,7 @@ jobs:
 
     env:
       GITOPS_REPO_FOLDER: qa
+      GITOPS_REPO_AUTO_MERGE: "N"
 
     steps:
       - name: Checkout Source
@@ -84,7 +87,8 @@ jobs:
             -r ${{ env.GITOPS_REPO_URL }} \
             -b ${{ env.GITOPS_REPO_BRANCH }} \
             -i ${{ github.run_number }} \
-            -t ${{ secrets.GITOPS_REPO_COMMIT_TOKEN }} -m N
+            -t ${{ secrets.GITOPS_REPO_COMMIT_TOKEN }} \
+            -m ${{ env.GITOPS_REPO_AUTO_MERGE }}
 
   Deploy_To_Prod:
     runs-on: ubuntu-latest
@@ -92,6 +96,7 @@ jobs:
 
     env:
       GITOPS_REPO_FOLDER: prod
+      GITOPS_REPO_AUTO_MERGE: "N"
 
     steps:
       - name: Checkout Source
@@ -111,4 +116,5 @@ jobs:
             -r ${{ env.GITOPS_REPO_URL }} \
             -b ${{ env.GITOPS_REPO_BRANCH }} \
             -i ${{ github.run_number }} \
-            -t ${{ secrets.GITOPS_REPO_COMMIT_TOKEN }} -m N
+            -t ${{ secrets.GITOPS_REPO_COMMIT_TOKEN }} \
+            -m ${{ env.GITOPS_REPO_AUTO_MERGE }}
