@@ -61,7 +61,7 @@ git checkout -b $deploy_branch_name
 
 # Add generated manifests to the new deploy branch
 mkdir -p $DEST_FOLDER
-cp -r $SOURCE_FOLDER/* $DEST_FOLDER/
+[ -d $SOURCE_FOLDER ] && cp -r $SOURCE_FOLDER/* $DEST_FOLDER/
 git add -A
 echo "git status"
 git status
