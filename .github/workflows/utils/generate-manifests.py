@@ -5,7 +5,8 @@ import sys
 import yaml
 import subprocess
 
-def parse_yaml_files(directory):
+def parse_yaml_files_in_directory(directory):
+
     # Check if the directory exists
     if not os.path.exists(directory):
         print(f"Directory '{directory}' does not exist.")
@@ -14,21 +15,22 @@ def parse_yaml_files(directory):
     # Initialize an empty list to store the parsed YAML data
     yaml_data_list = []
 
-    # Iterate through all files in the directory
-    for filename in os.listdir(directory):
-        # Check if the file has a .yaml or .yml extension
-        if filename.endswith(".yaml") or filename.endswith(".yml"):
-            file_path = os.path.join(directory, filename)
-            
-            # Try to open and parse the YAML file
-            try:
-                with open(file_path, "r") as yaml_file:
-                    yaml_data = yaml.safe_load(yaml_file)
-                    yaml_data_list.append(yaml_data)
-                    print(f"Parsed deploymentTarget '{filename}' successfully.")
-            except Exception as e:
-                print(f"Error parsing '{filename}': {str(e)}")
+    for root, _, files in os.walk(directory):
+        for file_name in files:
 
+            # Check if the file has a .yaml or .yml extension
+            if file_name.endswith(".yaml") or file_name.endswith(".yml"):
+                file_path = os.path.join(root, file_name)
+                with open(file_path, "r") as yaml_file:
+
+                    # Try to open and parse the YAML file
+                    try:
+                        yaml_data = yaml.safe_load(yaml_file)
+                        yaml_data_list.append(yaml_data)
+                        print(f"Parsed deploymentTarget '{file_name}' successfully.")
+                        print(yaml_data)
+                    except yaml.YAMLError as e:
+                        print(f"Error parsing {file_path}: {e}")
     return yaml_data_list
 
 def create_folder(folder_name):
@@ -97,27 +99,26 @@ def output_file_content(file_path):
 
 if __name__ == "__main__":
     # Check if a directory path argument is provided
-    if len(sys.argv) != 4:
-        print("Usage: python script.py <deployment_targets_path> <helm_chart_path> <gen_manifests_path>")
+    if len(sys.argv) != 3:
+        print("Usage: python script.py <deployment_targets_path> <gen_manifests_path>")
         sys.exit(1)
 
     # Input: Get the directory path from the command-line argument
     deployment_targets_path = sys.argv[1]
     print(f"DeploymentTarget path: '{deployment_targets_path}'")
 
-    # Input: Get the Helm chart path from the command-line argument
-    helm_chart_path = sys.argv[2]
-    print(f"Helm chart path: '{helm_chart_path}'")
-
     # Input: Get the generated Helm manifests path from the command-line argument
-    gen_manifests_path = sys.argv[3]
-    print(f"Generated Helm manifests path: '{gen_manifests_path}'")
+    gen_manifests_path = sys.argv[2]
+    print(f"Generated manifests path: '{gen_manifests_path}'")
 
     # Create base folder for generated helm manifests
     create_folder(gen_manifests_path)
 
-    # Call the function to parse YAML files in the directory
-    parsed_yaml_data = parse_yaml_files(deployment_targets_path)
+    # Parse YAML files in the directory
+    parsed_yaml_data = parse_yaml_files_in_directory(deployment_targets_path)
+
+    sys.exit(0)  # Success
+
 
     # Work with the parsed YAML data as a list of dictionaries
     for data in parsed_yaml_data:
