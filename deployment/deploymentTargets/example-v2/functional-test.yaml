@@ -1,0 +1,23 @@
+# Deployment description
+deployment:
+  targetName: functional-test
+  environment: dev
+  valueFiles:
+    # Helm application value file
+    application:
+    - deployment/example-v2/helm-values/values-dev.yaml
+
+    # Helm infrastructure value files
+    # The higher numbers - the higher precedence and overrides
+    infrastructure:
+    - infravalues/default.yaml
+    - infravalues/01-environment/dev.yaml
+    - infravalues/02-datacenterlocation/ldc.yaml
+
+# Helm chart description
+chart:
+  releaseName: my-example-v2
+  name: example-v2
+  version: 19.0.2
+  repository: "file://charts/example-v2"
+

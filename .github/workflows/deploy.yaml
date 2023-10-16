@@ -11,12 +11,6 @@ jobs:
 
   Build_Generate:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        chart_name:
-          - "hello-world-app"
-          - "example-v2"
-      fail-fast: false
 
     steps:
       - name: Checkout Source
@@ -25,8 +19,7 @@ jobs:
       - name: Generate Manifests
         run: |
           .github/workflows/utils/generate-manifests.py \
-            ${{ github.workspace }}/deployment/${{ matrix.chart_name }}/deploymentTargets/ \
-            ${{ github.workspace }}/charts/${{ matrix.chart_name }} \
+            ${{ github.workspace }}/deploymentTargets/ \
             ${{ github.workspace }}/generated_manifests
 
       - name: See generated manifests list
