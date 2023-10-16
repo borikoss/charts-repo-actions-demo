@@ -67,7 +67,7 @@ jobs:
 
     env:
       GITOPS_REPO_FOLDER: qa
-      GITOPS_REPO_AUTO_MERGE: "N"
+      GITOPS_REPO_AUTO_MERGE: "Y"
 
     steps:
       - name: Checkout Source
