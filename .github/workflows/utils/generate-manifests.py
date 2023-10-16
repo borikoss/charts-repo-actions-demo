@@ -164,9 +164,9 @@ if __name__ == "__main__":
         print(f"Helm chart path: '{helm_chart_path}'")
 
         # Run Helm template
-        #run_helm_template_cmd(helm_chart_path, helm_release_name, helm_value_files, output_manifest_file)
+        run_helm_template_cmd(helm_chart_path, helm_release_name, helm_value_files, output_manifest_file)
 
         # Print generated file content
-        content = output_file_content(output_manifest_file)
-        if content is not None:
-            print(content)
+        # content = output_file_content(output_manifest_file)
+        # if content is not None:
+        #     print(content)

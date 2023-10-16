@@ -5,7 +5,7 @@ deployment:
   valueFiles:
     # Helm application value file
     application:
-    - deployment/example-v2/helm-values/values-dev.yaml
+    - deployment/helm-values/example-v2/values-dev.yaml
 
     # Helm infrastructure value files
     # The higher numbers - the higher precedence and overrides
