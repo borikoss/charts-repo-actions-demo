@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
-#set -x
+# create-pr-bitbucket.sh -s ~/tmp/workspace-temp/stage -d <source-folder> -r <git-repo-dest>  \
+#     -i <deploy-id> -m <auto-merge> -t <token> -b <branch-dest> -a <rest-api-url>
 
-while getopts "s:d:r:b:i:t:e:m:" option;
+# set -x
+
+while getopts "s:d:r:b:i:t:e:m:a:" option;
     do
     case "$option" in
         s ) SOURCE_FOLDER=${OPTARG};;
@@ -12,6 +15,7 @@ while getopts "s:d:r:b:i:t:e:m:" option;
         i ) DEPLOY_ID=${OPTARG};;
         t ) TOKEN=${OPTARG};;
         m ) AUTO_MERGE=${OPTARG};;
+        a ) REST_API_URL=${OPTARG};;
     esac
 done
 
@@ -52,8 +56,7 @@ generate_pr_data()
 EOF
 }
 
-# Define variables
-REPO_REST_API_URL="https://sourcecode.socialcoding.bosch.com/rest/api/1.0"
+# Set variables
 REPO_URL=${DEST_REPO}
 REPO_GIT=${DEST_REPO##*/}
 REPO_NAME=${REPO_GIT%.*}
