@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -x
+#set -x
 
 while getopts "s:d:r:b:i:t:e:m:" option;
     do
@@ -96,6 +96,8 @@ if [[ `git status --porcelain | head -1` ]]; then
         --header "Content-Type: application/json" \
         --header "Authorization: Bearer ${TOKEN}" \
         --data-raw "$(generate_pr_data)")
+
+    echo $PR_RESPONSE
 
     if [[ "$AUTO_MERGE" == "Y" ]]; then
         # TO-DO: MERGE PR
